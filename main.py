@@ -2,6 +2,10 @@ from spy_details import spy_name,spy_rating,spy_age#importing these variables fr
 print'Hello buddy'#print hello buddy
 print'Let\'s get started'
 STATUS_MESSAGE=['Sleeping', 'Busy', 'Do not disturb']#list
+friends_name=['Shweta']
+friends_age=[25]
+friends_rating=[3.2]
+friends_is_online=[True]
 def add_status(c_status):
     if c_status != None:
         print "Your current status is "+ c_status
@@ -21,11 +25,18 @@ def add_status(c_status):
         new_status=STATUS_MESSAGE[user_choice-1]
         updated_status=new_status
         return updated_status
-
-
-
-
-
+def add_friend():
+    frnd_name=raw_input('What is your name ? ')
+    frnd_age=input('What is your age ? ')
+    frnd_rating=input('What is your rating ? ')
+    if len(frnd_name)>2 and 12<frnd_age<50 and frnd_rating>spy_rating :
+        friends_name.append(frnd_name)
+        friends_age.append(frnd_age)
+        friends_rating.append(frnd_rating)
+        friends_is_online.append(True)
+        return len(friends_name)
+    else:
+        print 'Friend cannot be added..'
 def spy_chat(spy_name,spy_age,spy_rating): #defining the function
     print'Here are your options..'+spy_name
     current_status=None
@@ -36,7 +47,8 @@ def spy_chat(spy_name,spy_age,spy_rating): #defining the function
             updated_status_message=add_status(current_status)
             print'Updated status is '+ updated_status_message
         elif spy_choice==2:#elif for multiple conditions.
-            print'Add a friend..'
+            no_of_friends=add_friend()
+            print 'You have '+ str(no_of_friends) +' friends.'
         elif spy_choice==0:
             show_menu=False
         else:
