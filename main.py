@@ -1,8 +1,12 @@
 from spy_details import spy #importing spy dictionary from spy_details file
+from steganography.steganography import Steganography#importing Steganography module from steganography class of steganography library
+from datetime import datetime #importing datetime module from datetime class
+time=datetime.now() #now() function will return current date and time
+print time #printing returned current date and time.
 print'Hello buddy'#print hello buddy
 print'Let\'s get started'
 STATUS_MESSAGE=['Sleeping', 'Busy', 'Do not disturb']#list
-friends=[{'name': 'Shweta','age': 22,'rating': 2.5,'is_online':True},{'name': 'Nidhi','age':22,'rating':3.5,'is_online':True}]#dictionary within a list
+friends=[{'name': 'Shweta','age': 22,'rating': 2.5,'is_online':True,'chats':[]},{'name': 'Nidhi','age':22,'rating':3.5,'is_online':True,'chats':[]}]#dictionary within a list
 def add_status(c_status):
     if c_status != None:
         print "Your current status is "+ c_status
@@ -11,7 +15,7 @@ def add_status(c_status):
     existing_status = raw_input("You want to select from old status? Y/N")
     if existing_status.upper() == 'N':
         new_status=raw_input('Enter your status : ')
-        if len(new_status) > 0:
+        if len(new_status) > 0: #checking length of status
             STATUS_MESSAGE.append(new_status)#adding new status to list..
     elif existing_status.upper()=='Y':
         serial_no=1
@@ -23,10 +27,13 @@ def add_status(c_status):
     updated_status=new_status
     return updated_status
 def add_friend():
-    frnd= {'name':'',
+    frnd= {
+           'name':'',
            'age':0,
            'rating':0.0,
-           'is_online':True}
+           'is_online':True,
+           'chats':[]
+           }
     frnd['name']=raw_input('What is your name ?')
     frnd['age']=input('What is your age ?')
     frnd['rating']=input('What is your rating ?')
@@ -35,18 +42,40 @@ def add_friend():
        friends.append(frnd)
     else:
         print 'Friend cannot be added..'
-    return len(friends)
+    return len(friends) # will return to add_friend()
 def select_frnd():
     serial_no=1
     for frnd in friends:# traversing the dictionary friends to show the friends.
         print str(serial_no)+'.'+frnd['name']
         serial_no=serial_no+1
-    user_selected_frnd=input('Enter your choice : ')
-    user_selected_frnd_index=user_selected_frnd-1
+    user_selected_frnd=input('Enter your choice : ')#user choice
+    user_selected_frnd_index=user_selected_frnd-1#index of the selected frnd
 def send_message():
     selected_frnd=select_frnd()
+    original_image=raw_input('What is the name of your image ? ')#asking user about the name of image
+    secret_text=raw_input('What is your secret text ? ') # asking about the secret text you want to save in image
+    output_path="output.png"
+    Steganography.encode(original_image,output_path,secret_text)#encoding the image with secret text..
+    print 'Your message has been successfully encoded..'
+    new_chat={     #dictionary
+        'message':secret_text,
+        'time': datetime.now(),
+        'sent_by_me':True
+    }
+   # friends[selected_frnd]['chats'].append(new_chat) #appending in friends list the new_chat dictionary
+    print'Your secret message is ready.'
 def read_message():
     selected_frnd=select_frnd()
+    output_path=raw_input('Which image you want to decode ? ')
+    secret_text=Steganography.decode(output_path)
+    print 'Secret text is:'+ secret_text
+    new_chat={   #dictionary...
+        'message':secret_text,
+        'time': datetime.now(),
+        'sent_by_me':False
+    }
+    #friends[selected_frnd]['chats'].append(new_chat)#appending
+    print'Your secret message has been saved...'
 def spy_chat(spy_name,spy_age,spy_rating): #defining the function
     print'Here are your options..'+spy_name
     current_status=None
