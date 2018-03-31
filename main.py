@@ -20,8 +20,8 @@ def add_status(c_status):
             serial_no=serial_no+1
         user_choice=input('Enter your choice :')
         new_status=STATUS_MESSAGE[user_choice-1]
-        updated_status=new_status
-        return updated_status
+    updated_status=new_status
+    return updated_status
 def add_friend():
     frnd= {'name':'',
            'age':0,
@@ -54,8 +54,8 @@ def spy_chat(spy_name,spy_age,spy_rating): #defining the function
     while show_menu:
         spy_choice=input('What do you want to do \n 1. Add a status. \n 2. Add a friend \n 3. Send a message \n 4. Read a message \n 0. exit')
         if spy_choice==1:
-            current_status=add_status(current_status)
-            print'Updated status is '+ current_status
+            current_status= add_status(current_status)
+            print 'Updated status is '+ current_status
         elif spy_choice==2:#elif for multiple conditions.
             no_of_friends=add_friend()
             print 'You have '+ str(no_of_friends) +' friends.'
