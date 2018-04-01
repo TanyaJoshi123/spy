@@ -6,22 +6,22 @@ print time #printing returned current date and time.
 print'Hello buddy'#print hello buddy
 print'Let\'s get started'
 STATUS_MESSAGE=['Sleeping', 'Busy', 'Do not disturb']#list
-friends=[{'name': 'Shweta','age': 22,'rating': 2.5,'is_online':True,'chats':[]},{'name': 'Nidhi','age':22,'rating':3.5,'is_online':True,'chats':[]}]#dictionary within a list
+friends=[{'name': 'Shweta','age': 22,'rating': 2.5,'is_online':True,'chats': []},{'name': 'Nidhi','age':22,'rating':3.5,'is_online':True,'chats':[]}]#dictionary within a list
 def add_status(c_status):
-    if c_status != None:
+    if c_status != None: #if nothing is chosen from status
         print "Your current status is "+ c_status
     else:
         print"You don't have any status currently.."
     existing_status = raw_input("You want to select from old status? Y/N")
     if existing_status.upper() == 'N':
-        new_status=raw_input('Enter your status : ')
+        new_status=raw_input('Enter your status : ')#asking new status from user
         if len(new_status) > 0: #checking length of status
             STATUS_MESSAGE.append(new_status)#adding new status to list..
     elif existing_status.upper()=='Y':
         serial_no=1
         for old_status in STATUS_MESSAGE:#traversing the list
             print str(serial_no)+old_status
-            serial_no=serial_no+1
+            serial_no=serial_no+1#increementing the value of serial no
         user_choice=input('Enter your choice :')
         new_status=STATUS_MESSAGE[user_choice-1]
     updated_status=new_status
@@ -50,6 +50,7 @@ def select_frnd():
         serial_no=serial_no+1
     user_selected_frnd=input('Enter your choice : ')#user choice
     user_selected_frnd_index=user_selected_frnd-1#index of the selected frnd
+    return user_selected_frnd_index
 def send_message():
     selected_frnd=select_frnd()
     original_image=raw_input('What is the name of your image ? ')#asking user about the name of image
@@ -62,7 +63,7 @@ def send_message():
         'time': datetime.now(),
         'sent_by_me':True
     }
-   # friends[selected_frnd]['chats'].append(new_chat) #appending in friends list the new_chat dictionary
+    friends[selected_frnd]['chats'].append(new_chat) #appending in friends list the new_chat dictionary
     print'Your secret message is ready.'
 def read_message():
     selected_frnd=select_frnd()
@@ -74,7 +75,7 @@ def read_message():
         'time': datetime.now(),
         'sent_by_me':False
     }
-    #friends[selected_frnd]['chats'].append(new_chat)#appending
+    friends[selected_frnd]['chats'].append(new_chat)#appending
     print'Your secret message has been saved...'
 def spy_chat(spy_name,spy_age,spy_rating): #defining the function
     print'Here are your options..'+spy_name
@@ -88,9 +89,9 @@ def spy_chat(spy_name,spy_age,spy_rating): #defining the function
         elif spy_choice==2:#elif for multiple conditions.
             no_of_friends=add_friend()
             print 'You have '+ str(no_of_friends) +' friends.'
-        elif spy_choice==3:
+        elif spy_choice==3:#will send encoded message
             send_message()
-        elif spy_choice==4:
+        elif spy_choice==4:#will display the decoded message
             read_message()
         elif spy_choice==0:
             show_menu=False
