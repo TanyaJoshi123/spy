@@ -26,7 +26,7 @@ def add_status(c_status):
         new_status=STATUS_MESSAGE[user_choice-1]
     updated_status=new_status
     return updated_status
-def add_friend():
+def add_friend():#add_friend to add a new friend
     frnd= {
            'name':'',
            'age':0,
@@ -34,16 +34,16 @@ def add_friend():
            'is_online':True,
            'chats':[]
            }
-    frnd['name']=raw_input('What is your name ?')
-    frnd['age']=input('What is your age ?')
-    frnd['rating']=input('What is your rating ?')
+    frnd['name']=raw_input('What is your name ?')#asking the new friend's name
+    frnd['age']=input('What is your age ?')#age
+    frnd['rating']=input('What is your rating ?')#rating
     frnd['is_online']=True
     if len(frnd['name'])>2 and 12<frnd['age']<50 and frnd['rating']>spy['rating'] :
        friends.append(frnd)
     else:
         print 'Friend cannot be added..'
     return len(friends) # will return to add_friend()
-def select_frnd():
+def select_a_frnd():#selecting a frnd to send or read a message
     serial_no=1
     for frnd in friends:# traversing the dictionary friends to show the friends.
         print str(serial_no)+'.'+frnd['name']
@@ -51,11 +51,11 @@ def select_frnd():
     user_selected_frnd=input('Enter your choice : ')#user choice
     user_selected_frnd_index=user_selected_frnd-1#index of the selected frnd
     return user_selected_frnd_index
-def send_message():
-    selected_frnd=select_frnd()
+def send_a_message():#to send a message to selected friend
+    selected_friend=select_a_frnd()
     original_image=raw_input('What is the name of your image ? ')#asking user about the name of image
     secret_text=raw_input('What is your secret text ? ') # asking about the secret text you want to save in image
-    output_path="output.png"
+    output_path="output.jpg"
     Steganography.encode(original_image,output_path,secret_text)#encoding the image with secret text..
     print 'Your message has been successfully encoded..'
     new_chat={     #dictionary
@@ -63,10 +63,10 @@ def send_message():
         'time': datetime.now(),
         'sent_by_me':True
     }
-    friends[selected_frnd]['chats'].append(new_chat) #appending in friends list the new_chat dictionary
+    friends[selected_friend]['chats'].append(new_chat) #appending in friends list the new_chat dictionary
     print'Your secret message is ready.'
-def read_message():
-    selected_frnd=select_frnd()
+def read_a_message():#to read a message
+    selected_friend=select_a_frnd()
     output_path=raw_input('Which image you want to decode ? ')
     secret_text=Steganography.decode(output_path)
     print 'Secret text is:'+ secret_text
@@ -75,7 +75,7 @@ def read_message():
         'time': datetime.now(),
         'sent_by_me':False
     }
-    friends[selected_frnd]['chats'].append(new_chat)#appending
+    friends[selected_friend]['chats'].append(new_chat)#appending
     print'Your secret message has been saved...'
 def spy_chat(spy_name,spy_age,spy_rating): #defining the function
     print'Here are your options..'+spy_name
@@ -90,9 +90,9 @@ def spy_chat(spy_name,spy_age,spy_rating): #defining the function
             no_of_friends=add_friend()
             print 'You have '+ str(no_of_friends) +' friends.'
         elif spy_choice==3:#will send encoded message
-            send_message()
+            send_a_message()
         elif spy_choice==4:#will display the decoded message
-            read_message()
+            read_a_message()
         elif spy_choice==0:
             show_menu=False
         else:
