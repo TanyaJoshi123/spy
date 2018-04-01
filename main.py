@@ -55,7 +55,7 @@ def send_a_message():#to send a message to selected friend
     selected_friend=select_a_frnd()
     original_image=raw_input('What is the name of your image ? ')#asking user about the name of image
     secret_text=raw_input('What is your secret text ? ') # asking about the secret text you want to save in image
-    output_path="output.jpg"
+    output_path="output.png"
     Steganography.encode(original_image,output_path,secret_text)#encoding the image with secret text..
     print 'Your message has been successfully encoded..'
     new_chat={     #dictionary
