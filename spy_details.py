@@ -1,5 +1,17 @@
-spy={
-    'name': 'Ms. Tanya',
-    'age': 19,
-    'rating': 1.2
-}
+from datetime import datetime
+class Spy:
+    def __init__(self,name,salutation,age,rating):
+        self.name=salutation +" " +name
+        self.age=age
+        self.rating=rating
+        self.is_online=True
+        self.chats=[]
+        self.current_status_message=None
+
+spy=Spy('Tanya','Ms.',19,1.1)
+
+class ChatMessage:
+    def __init__(self,message,sent_by_me):
+        self.message=message
+        self.time=datetime.now()
+        self.sent_by_me=sent_by_me
