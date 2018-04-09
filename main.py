@@ -12,32 +12,35 @@ frnd1=Spy('nidhi','Ms.',21,4.2)
 frnd2=Spy('pragati','Ms.',32,5.1)
 friends=[frnd1,frnd2]
 
-def load_frnd():
-    with open('friends.csv', 'rb') as friends_data:
-        reader=list(csv.reader(friends_data))
+def load_frnd():#loading friends in front of user when he sends the message
+
+    with open('friends.csv','rU') as friends_data:
+        #reader = csv.reader(open(friends_data, 'r'), dialect=csv.excel_tab)
+        reader = list(csv.reader(friends_data))
 
         for row in reader[1:]:
             spy=Spy(name=row[0], salutation=row[1], age=int(row[2]), rating=float(row[3]))
             friends.append(spy)
 load_frnd()#calling the function
 
-def load_chats():
-    with open('chats.csv','rb') as chats_data:
+def load_chats():#to load all the chats
+    with open('chats.csv','rU') as chats_data:
         reader=list(csv.reader(chats_data))
 
-        for message,date,sent_by_me,receiver_name in reader[1:]:
-            print message,date,sent_by_me,receiver_name
+        for row in reader[1:]:
+            print row
 
-def selected_chat():
+def selected_chat():#to load the chat of sekected friend only
     s_name=raw_input('Enter the friend whose chats you want to see..')
-    with open('chats.csv','rb') as chats_data:
+    with open('chats.csv','rU') as chats_data:
         reader=list(csv.reader(chats_data))
         for message,date,sent_by_me,receiver_name in reader[1:]:
             if s_name==receiver_name:
-                print Fore.BLUE+message,Fore.CYAN+date,Fore.LIGHTBLUE_EX+sent_by_me,Fore.LIGHTGREEN_EX+receiver_name
+                print Fore.BLUE+message,Fore.CYAN+date,Fore.MAGENTA+sent_by_me,Fore.LIGHTGREEN_EX+receiver_name
                 print(Style.RESET_ALL)
             else:
-                print'No chats available..'
+                print Fore.CYAN+'No chats available..'
+                print (Style.RESET_ALL)
 
 def add_status(c_status):#defining the function
     if c_status!=None:
