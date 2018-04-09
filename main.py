@@ -8,14 +8,13 @@ print time
 print'Hello Buddy!'
 print'Let\s get started'
 Status_Message=['Sleeping','Busy','Do not disturb']
-frnd1=Spy('nidhi','Ms.',21,4.2)
-frnd2=Spy('pragati','Ms.',32,5.1)
+frnd1=Spy('Nidhi','Ms.',21,4.2)
+frnd2=Spy('Pragati','Ms.',32,5.1)
 friends=[frnd1,frnd2]
 
 def load_frnd():#loading friends in front of user when he sends the message
 
     with open('friends.csv','rU') as friends_data:
-        #reader = csv.reader(open(friends_data, 'r'), dialect=csv.excel_tab)
         reader = list(csv.reader(friends_data))
 
         for row in reader[1:]:
@@ -27,20 +26,18 @@ def load_chats():#to load all the chats
     with open('chats.csv','rU') as chats_data:
         reader=list(csv.reader(chats_data))
 
-        for row in reader[1:]:
-            print row
+        for message,date,sent_by_me,receiver_name in reader[1:]:
+            print Fore.BLACK+message,Fore.BLUE+date,Fore.RED+sent_by_me,Fore.MAGENTA+receiver_name
+            print (Style.RESET_ALL)
 
-def selected_chat():#to load the chat of sekected friend only
+def selected_chat():#to load the chat of selected friend only
     s_name=raw_input('Enter the friend whose chats you want to see..')
     with open('chats.csv','rU') as chats_data:
         reader=list(csv.reader(chats_data))
         for message,date,sent_by_me,receiver_name in reader[1:]:
             if s_name==receiver_name:
-                print Fore.BLUE+message,Fore.CYAN+date,Fore.MAGENTA+sent_by_me,Fore.LIGHTGREEN_EX+receiver_name
+                print Fore.BLACK+message,Fore.BLUE+date,Fore.RED+sent_by_me,Fore.LIGHTGREEN_EX+receiver_name
                 print(Style.RESET_ALL)
-            else:
-                print Fore.CYAN+'No chats available..'
-                print (Style.RESET_ALL)
 
 def add_status(c_status):#defining the function
     if c_status!=None:
@@ -103,7 +100,7 @@ def send_a_message():
 
        with open('chats.csv','a') as chats_data:#writing in chats.csv
          writer=csv.writer(chats_data)
-         writer.writerow([secret_text,time.strftime('%d %m %H'),spy.name,friends[selected_friend].name])
+         writer.writerow([secret_text,time,spy.name,friends[selected_friend].name])
 def read_a_message():
     selected_friend=select_a_frnd()
     output_path=raw_input('Which image you want to decode? ')
